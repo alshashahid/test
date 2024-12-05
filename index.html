@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coranu - Thoughts, Ideas, and Stories</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Coranu</h1>
+            <div class="user-info">
+                <span>Search</span>
+                <button>Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Thoughts, Ideas, and Stories</h2>
+            <p>A space where creativity flows, ideas thrive, and stories connect.</p>
+        </section>
+
+        <section class="content">
+            <aside>
+                <h3>Blog Topics</h3>
+                <ul>
+                    <li><a href="#">Company</a></li>
+                    <li><a href="#">Design</a></li>
+                    <li><a href="#">Technology</a></li>
+                    <li><a href="#">Crypto</a></li>
+                    <li><a href="#">AI</a></li>
+                </ul>
+                <h3>Guide and Tools</h3>
+                <ul>
+                    <li><a href="#">Guidelines</a></li>
+                    <li><a href="#">Mentorship</a></li>
+                    <li><a href="#">Training</a></li>
+                    <li><a href="#">Career</a></li>
+                    <li><a href="#">Self Care</a></li>
+                </ul>
+            </aside>
+
+            <div class="articles">
+                <article>
+                    <h4>Powerful Trading Tools and Features for Experienced Investors</h4>
+                    <p>May 1 | 5 min read</p>
+                </article>
+                <article>
+                    <h4>Master JavaScript: 10 Essential Tips Every Developer Must Know</h4>
+                    <p>Jan 7 | 4 min read</p>
+                    <p>JavaScript remains one of the most popular programming languages...</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="newsletter">
+            <h3>Stay up to date</h3>
+            <p>Join Our Newsletter</p>
+            <form>
+                <input type="email" placeholder="Your Email" required>
+                <button type="submit">Submit</button>
+            </form>
+            <small>You can unsubscribe anytime</small>
+        </section>
+    </main>
+
+    <script src="script.js"></script> 
+
+    
+    
+
+  
+    
+            
+
+
+
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup and Login in Corner with Firebase</title>
+
+    <!-- Include Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        /* Positioning the forms in the top-right corner */
+        .auth-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .auth-container p {
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Signup Form -->
+    <div id="signup-container" class="auth-container">
+        <h2>Signup</h2>
+        <input type="email" id="signup-email" placeholder="Enter email" required>
+        <input type="password" id="signup-password" placeholder="Enter password" required>
+        <button id="signup-button">Sign Up</button>
+        <p>Already have an account? <a href="#" id="show-login">Login here</a></p>
+    </div>
+
+    <!-- Login Form -->
+    <div id="login-container" class="auth-container" style="display: none;">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="Enter email" required>
+        <input type="password" id="login-password" placeholder="Enter password" required>
+        <button id="login-button">Login</button>
+        <p>Don't have an account? <a href="#" id="show-signup">Sign up here</a></p>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",  // Replace with your Firebase API key
+            authDomain: "YOUR_AUTH_DOMAIN",  // Replace with your Firebase Auth domain
+            projectId: "YOUR_PROJECT_ID",  // Replace with your Firebase project ID
+            storageBucket: "YOUR_STORAGE_BUCKET",  // Replace with your Firebase Storage bucket
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",  // Replace with your Firebase Messaging sender ID
+            appId: "YOUR_APP_ID"  // Replace with your Firebase app ID
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Signup function
+        document.getElementById('signup-button').addEventListener('click', function() {
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('User signed up:', userCredential.user);
+                    alert('Signup successful!');
+                    // Optionally, redirect the user to another page after signup
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error(errorCode, errorMessage);
+                    alert('Error: ' + errorMessage);
+                });
+        });
+
+        // Login function
+        document.getElementById('login-button').addEventListener('click', function() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('User logged in:', userCredential.user);
+                    alert('Login successful!');
+                    // Optionally, redirect the user to another page after login
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error(errorCode, errorMessage);
+                    alert('Error: ' + errorMessage);
+                });
+        });
+
+        // Toggle between Signup and Login forms
+        document.getElementById('show-login').addEventListener('click', function() {
+            document.getElementById('signup-container').style.display = 'none';
+            document.getElementById('login-container').style.display = 'block';
+        });
+
+        document.getElementById('show-signup').addEventListener('click', function() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('signup-container').style.display = 'block';
+            
+        });
+    </script>
+
+</body>
+</html>
